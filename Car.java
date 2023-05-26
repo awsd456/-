@@ -1,16 +1,78 @@
-package com.green.java.ch06;
+package com.green.java.builder;
 
 public class Car {
-    static String brand;
-    String model;
-    int price;
+    private int cc;
+    private String brand;
+    private String model;
+    private int seatCnt;
 
-    static void powerOn() {                                 //static이 속도가 빠르다 //
-        System.out.printf("%s 회사의 차 시동 걸림\n", brand);
+    public static class Builder {
+        private int cc;
+        private String brand;
+        private String model;
+        private int seatCnt;
+
+
+
+        public Builder cc(int cc) {
+            this.cc = cc;
+            return this;
+        }
+
+        public Builder brand(String brand) {
+            this.brand = brand;
+            return this;
+        }
+
+        public Builder model(String model) {
+            this.model = model;
+            return this;
+        }
+
+        public Builder seatCnt(int seatCnt) {
+            this.seatCnt = seatCnt;
+            return this;
+        }
+
+        public Car build() {
+            return new Car(this);
+        }
     }
 
-    void printInfo() {
-        System.out.printf("brand: %s, model : %s, price: %d\n"
-                , brand, model, price);
+    public static Builder builder() {
+        return new Builder();
     }
+
+
+
+
+    private Car(Builder builder) {
+        this.cc = builder.cc;
+        this.brand = builder.brand;
+        this.model = builder.model;
+        this.seatCnt = builder.seatCnt;
+
+    }
+
+    public int getCc() {
+        return cc;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public int getSeatCnt() {
+        return seatCnt;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("cc: %d, brand: %s ,model: %s, seatCnt: %d", cc, brand, model, seatCnt);
+    }
+
 }
